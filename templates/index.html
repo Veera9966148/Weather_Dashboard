@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Weather Dashboard Pro</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static',
+        filename='style.css') }}">
+</head>
+
+<body class="{{ weather.main if weather else '' }}">
+
+    <!-- Dark Mode Button -->
+    <button id="dark-btn">
+        🌙
+    </button>
+
+    <div class="container">
+
+        <h1>🌦️ Weather Dashboard</h1>
+
+        <!-- Search Form -->
+        <form method="POST">
+
+            <input
+                type="text"
+                name="city"
+                placeholder="Enter city name..."
+                required>
+
+            <button type="submit">
+                Search
+            </button>
+
+        </form>
+
+        <!-- Loading Spinner -->
+        <div
+            id="loader"
+            class="loader">
+        </div>
+
+        <!-- Error Message -->
+        {% if error %}
+            <p class="error">
+                ❌ {{ error }}
+            </p>
+        {% endif %}
+
+        <!-- Weather Card -->
+        {% if weather %}
+
+        <div class="card">
+
+            <img
+                src="https://openweathermap.org/img/wn/{{ weather.icon }}@2x.png"
+                alt="Weather Icon">
+
+            <h2>
+                📍 {{ weather.city }},
+                {{ weather.country }}
+            </h2>
+
+            <h1>
+                {{ weather.temp }}°C
+            </h1>
+
+            <p>
+                🌡️ Feels Like:
+                {{ weather.feels }}°C
+            </p>
+
+            <p>
+                ☁️
+                {{ weather.description }}
+            </p>
+
+            <p>
+                💧 Humidity:
+                {{ weather.humidity }}%
+            </p>
+
+            <p>
+                💨 Wind:
+                {{ weather.wind }} m/s
+            </p>
+
+            <p>
+                🔵 Pressure:
+                {{ weather.pressure }} hPa
+            </p>
+
+            <p>
+                🌅 Sunrise:
+                {{ weather.sunrise }}
+            </p>
+
+            <p>
+                🌇 Sunset:
+                {{ weather.sunset }}
+            </p>
+
+        </div>
+
+        {% endif %}
+
+        <!-- Forecast -->
+        {% if forecast %}
+
+        <div class="forecast">
+
+            <h3>
+                📅 5 Forecast Updates
+            </h3>
+
+            <div class="forecast-grid">
+
+                {% for item in forecast %}
+
+                <div class="forecast-item">
+
+                    <img
+                        src="https://openweathermap.org/img/wn/{{ item.icon }}@2x.png"
+                        alt="Forecast">
+
+                    <p>
+                        {{ item.temp }}°C
+                    </p>
+
+                    <small>
+                        {{ item.time }}
+                    </small>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+        <!-- Search History -->
+        {% if history %}
+
+        <div class="history">
+
+            <h3>
+                🕒 Recent Searches
+            </h3>
+
+            {% for city in history %}
+
+                <span class="history-item">
+                    📍 {{ city[0] }}
+                </span>
+
+            {% endfor %}
+
+        </div>
+
+        {% endif %}
+
+        <!-- Favorites -->
+        {% if favorites %}
+
+        <div class="history">
+
+            <h3>
+                ⭐ Favorite Cities
+            </h3>
+
+            {% for city in favorites %}
+
+                <span class="history-item">
+                    ⭐ {{ city[0] }}
+                </span>
+
+            {% endfor %}
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+    <script
+        src="{{ url_for('static',
+        filename='script.js') }}">
+    </script>
+
+</body>
+</html>
