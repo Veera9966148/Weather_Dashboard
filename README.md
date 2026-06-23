@@ -39,6 +39,9 @@ API_KEY=your_openweather_api_key
 
 ## Deployment
 
+🌐 Live Demo:
+https://weather-dashboard-w0qp.onrender.com
+
 Deploy on Render using:
 
 Build Command:
